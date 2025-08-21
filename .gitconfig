@@ -1,0 +1,18 @@
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[core]
+	autocrlf = true
+	safecrlf = false
+[user]
+	name = Clay Morrow
+	email = 25436787+morrowcj@users.noreply.github.com
+	signingkey = D140C7F447C48A81
+[commit]
+	gpgSign = true
+[tag]
+	gpgsign = true
+[url "ssh://git@github.com/"]
+        insteadOf = https://github.com/
