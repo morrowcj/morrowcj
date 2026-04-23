@@ -1,8 +1,43 @@
 import inspect
+from copy import deepcopy
 from functools import partial
 from typing import Callable
+from dictdiffer import diff
 
-from markdown_it.rules_core import inline
+def diff_dicts(x: dict|list|set, y: dict|list|set, **kwargs) -> list[tuple]:
+    """Display the difference between two dictionaries.
+
+    Parameters
+    ----------
+        x: dict
+            the first "from" dictionary
+        y: dict
+            the second "to" dictionary
+        **kwargs:
+            additional arguments passed to dictdiffer.diff
+
+    Returns
+    -------
+    A list if "diff" tuples, which indicate a change, addition, or removal from x to y. diff tuples take the form
+    ("type", "where", "what"): type is if it is a "change", "add" or "remove; "where" is the location of the difference
+    (note that a.b indicates the "b" sub-key of the "a" key); and "what" is a tuple (or list of tuples) of the form
+    ("from", "to") that shows the old "x" and new "y" values, respectively.
+
+    See the Examples below.
+
+    Examples
+    --------
+        a = {"x": 1, "y": {"p": 20}}
+        b = {"x": 100, "z": 0.75}
+        c = {"y": {"p": 20000, "q": 80}}
+        diff_dicts(a, b)
+        diff_dicts(a, c)
+        diff_dicts(b, c)
+    """
+    diff_results = diff(x, y, **kwargs)
+
+    return list(diff_results)
+
 
 
 def overwrite_combine(source: dict, target: dict, inplace = False) -> dict | None:
@@ -34,6 +69,7 @@ def overwrite_combine(source: dict, target: dict, inplace = False) -> dict | Non
     new = overwrite_combine(source, sync)
     print(new)
     print(sync) # unchanged
+    print(source) # unchanged
 
     overwrite_combine(source, sync, inplace = True)
     print(sync) # updated
@@ -43,7 +79,7 @@ def overwrite_combine(source: dict, target: dict, inplace = False) -> dict | Non
     novel_combine: which is the inverse of this function, that only updates target with novel elements from source
     """
 
-    target_copy = target.copy()
+    target_copy = deepcopy(target)
 
     for k, v in source.items():
         if isinstance(v, dict):
@@ -83,8 +119,8 @@ def novel_combine(source: dict, target: dict, inplace = False) -> dict | None:
     --------
     overwrite_combine: The inverse of this function, that overwrites elements with source elements
     """
-    target_copy = target.copy()
-    source_copy = source.copy()
+    target_copy = deepcopy(target)
+    source_copy = deepcopy(source)
 
     overwrite_combine(target_copy, source_copy, inplace = True)
 
