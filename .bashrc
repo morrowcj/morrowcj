@@ -108,7 +108,7 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias ll='ls -alhF'
+alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
@@ -136,8 +136,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# custom command to connect to tmux with ssh automatically
-function sshux () {
-	/usr/bin/ssh -t "$@" "tmux new -A -s remote";
-}
-export -f sshux
+. "$HOME/.local/bin/env"
+
+# Enable pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"

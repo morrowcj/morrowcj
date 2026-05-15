@@ -16,3 +16,8 @@
 	gpgsign = true
 [url "ssh://git@github.com/"]
         insteadOf = https://github.com/
+[safe]
+	directory = /media/T7 Shield/projects/NEON-Peromyscus
+	directory = /media/morrowcj/T7_Shield/projects/pine-legume
+[init]
+	defaultBranch = main
