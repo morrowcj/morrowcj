@@ -4,8 +4,8 @@
 	process = git-lfs filter-process
 	required = true
 [core]
-	autocrlf = true
-	safecrlf = false
+	autocrlf = input
+	safecrlf = true
 [user]
 	name = Clay Morrow
 	email = 25436787+morrowcj@users.noreply.github.com
