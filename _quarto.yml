@@ -31,6 +31,7 @@ syntax-highlighting: github
 format:
   # HTML: options found at https://quarto.org/docs/reference/formats/html.html
   html: 
+    anchor-sections: true
     html-math-method: katex # how to render equations
     df-print: kable # how to print data frames (R)
     embed-resources: true # make sure the html files are self-contained
